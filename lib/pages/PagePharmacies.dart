@@ -16,11 +16,13 @@ import '../utils/Globals.dart';
 
 class PagePharmacies extends StatefulWidget {
   const PagePharmacies({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return PharmaciesState();
   }
 }
+
 class PharmaciesState extends State<PagePharmacies> {
   final Section section = Section();
   Set<Marker> listMarker = {};
@@ -31,17 +33,22 @@ class PharmaciesState extends State<PagePharmacies> {
     PharmaciesButton(Icons.local_pharmacy, Colors.red, 'Guardia')
   ];
   final Completer<GoogleMapController> _controller =
-  Completer<GoogleMapController>();
+      Completer<GoogleMapController>();
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(42.17131586971877, -0.4523206650598738),
     zoom: 15.4746,
   );
+
   Future<Uint8List?> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
     ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))?.buffer.asUint8List();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))
+        ?.buffer
+        .asUint8List();
   }
+
   @override
   void initState() {
     section.getAllPharmaciesByLocality('${Globals.locality}').then((value) =>
@@ -77,41 +84,53 @@ class PharmaciesState extends State<PagePharmacies> {
                                             alignment: Alignment.topLeft,
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     Container(
                                                       padding:
-                                                      const EdgeInsets.only(
-                                                          left: 15.0),
-                                                      alignment: Alignment.topLeft,
+                                                          const EdgeInsets.only(
+                                                              left: 15.0),
+                                                      alignment:
+                                                          Alignment.topLeft,
                                                       child: Text(element.name!,
-                                                          style: const TextStyle(
-                                                              fontWeight:
-                                                              FontWeight.bold,
-                                                              fontSize: 15.0)),
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize:
+                                                                      15.0)),
                                                     ),
                                                     Container(
-                                                      padding: EdgeInsets.only(right: 15.0),
-                                                      child: Text(renderTextTraslated(element.type!, context),
+                                                      padding: EdgeInsets.only(
+                                                          right: 15.0),
+                                                      child: Text(
+                                                          renderTextTraslated(
+                                                              element.type!,
+                                                              context),
                                                           style: TextStyle(
                                                               fontSize: 15.0,
-                                                              backgroundColor:
-                                                              element.type ==
-                                                                  AppLocalizations.of(context)!.guard
-                                                                  ? Colors
-                                                                  .blue
+                                                              backgroundColor: element
+                                                                          .type ==
+                                                                      AppLocalizations.of(
+                                                                              context)!
+                                                                          .guard
+                                                                  ? Colors.blue
                                                                   : Colors
-                                                                  .red)),
+                                                                      .red)),
                                                     )
                                                   ],
                                                 ),
                                                 Container(
                                                   padding:
-                                                  const EdgeInsets.only(
-                                                      left: 15.0),
+                                                      const EdgeInsets.only(
+                                                          left: 15.0),
                                                   alignment: Alignment.topLeft,
                                                   child: Text(
                                                       '${element.username!} · Huesca',
@@ -122,35 +141,37 @@ class PharmaciesState extends State<PagePharmacies> {
                                                 const Divider(),
                                                 Container(
                                                     alignment:
-                                                    Alignment.topLeft,
+                                                        Alignment.topLeft,
                                                     padding:
-                                                    const EdgeInsets.only(
-                                                        top: 5.0,
-                                                        left: 15.0),
+                                                        const EdgeInsets.only(
+                                                            top: 5.0,
+                                                            left: 15.0),
                                                     child: Row(
-                                                      mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
-                                                        Text(element.schedule! ,
-                                                            style: const TextStyle(
-                                                                fontSize:
-                                                                12.0)),
+                                                        Expanded(
+                                                          child: Text(
+                                                            element.schedule!,
+                                                            style: TextStyle(fontSize: 12.0),
+                                                            maxLines: null,
+                                                          ),
+                                                        ),
                                                       ],
-                                                    )),
+                                                    )
+                                                ),
                                                 const Divider(),
                                                 Container(
                                                     alignment:
-                                                    Alignment.topLeft,
+                                                        Alignment.topLeft,
                                                     padding:
-                                                    const EdgeInsets.only(
-                                                        top: 5.0,
-                                                        left: 15.0),
+                                                        const EdgeInsets.only(
+                                                            top: 5.0,
+                                                            left: 15.0),
                                                     child: Text(
                                                         element.direction!,
                                                         style: const TextStyle(
                                                             color:
-                                                            Colors.grey))),
+                                                                Colors.grey))),
                                               ],
                                             )),
                                       ],
@@ -172,11 +193,13 @@ class PharmaciesState extends State<PagePharmacies> {
     BackButtonInterceptor.add(myInterceptor);
     super.initState();
   }
+
   @override
   void dispose() {
     BackButtonInterceptor.remove(myInterceptor);
     super.dispose();
   }
+
   Future<bool> myInterceptor(
       bool stopDefaultButtonEvent, RouteInfo info) async {
     // Navigator.of(context).push(MaterialPageRoute(builder: (_) => ));
@@ -184,6 +207,7 @@ class PharmaciesState extends State<PagePharmacies> {
     Navigator.of(context).pop();
     return true;
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -212,7 +236,7 @@ class PharmaciesState extends State<PagePharmacies> {
                       ElevatedButton(
                           style: const ButtonStyle(
                               backgroundColor:
-                              MaterialStatePropertyAll(Colors.white)),
+                                  MaterialStatePropertyAll(Colors.white)),
                           onPressed: () {
                             switch (tab.name!) {
                               case 'Normal':
@@ -220,7 +244,7 @@ class PharmaciesState extends State<PagePharmacies> {
                                   listMarker = listMarkerSaved;
                                   listMarker = listMarker
                                       .where((element) =>
-                                  element.markerId.value == 'Normal')
+                                          element.markerId.value == 'Normal')
                                       .toSet();
                                 });
                                 break;
@@ -229,7 +253,7 @@ class PharmaciesState extends State<PagePharmacies> {
                                   listMarker = listMarkerSaved;
                                   listMarker = listMarker
                                       .where((element) =>
-                                  element.markerId.value == 'Guardia')
+                                          element.markerId.value == 'Guardia')
                                       .toSet();
                                 });
                                 break;
@@ -239,14 +263,12 @@ class PharmaciesState extends State<PagePharmacies> {
                                 });
                             }
                           },
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                              children: [
-                              renderImageToTab(tab.name!),
-                              SizedBox(width: 8.0),
-                              Text(renderTextTraslated(tab.name!, context),
-                                  style: const TextStyle(color: Colors.black))
-                              ]))
+                          child: Row(mainAxisSize: MainAxisSize.max, children: [
+                            renderImageToTab(tab.name!),
+                            SizedBox(width: 8.0),
+                            Text(renderTextTraslated(tab.name!, context),
+                                style: const TextStyle(color: Colors.black))
+                          ]))
                   ])
             ],
           ),
@@ -276,17 +298,22 @@ String renderTextTraslated(String name, BuildContext context) {
 Widget renderImagePharmacy(Pharmacy pharmacy) {
   if (pharmacy.imageUrl == null) {
     return SizedBox(
-        width: 200.0, height: 200.0, child: Image.asset('assets/pharmacies.png'));
+        width: 200.0,
+        height: 200.0,
+        child: Image.asset('assets/pharmacies.png'));
   } else {
     return Image.network(pharmacy.imageUrl!,
         fit: BoxFit.fill, height: 200, width: 300);
   }
-
 }
-Widget renderImageToTab(String tabName){
-  switch(tabName){
-    case 'Normal': return Image.asset('assets/normal1.png', width: 30.0, height: 30.0);
-    case 'Guardia': return Image.asset('assets/guardia1.png', width: 30.0, height: 30.0);
-    default: return Image.asset('assets/todo_pharmacy.png', width: 30.0, height: 30.0);
+
+Widget renderImageToTab(String tabName) {
+  switch (tabName) {
+    case 'Normal':
+      return Image.asset('assets/normal1.png', width: 30.0, height: 30.0);
+    case 'Guardia':
+      return Image.asset('assets/guardia1.png', width: 30.0, height: 30.0);
+    default:
+      return Image.asset('assets/todo_pharmacy.png', width: 30.0, height: 30.0);
   }
 }
