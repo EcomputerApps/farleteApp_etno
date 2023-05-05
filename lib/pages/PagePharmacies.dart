@@ -33,7 +33,7 @@ class PharmaciesState extends State<PagePharmacies> {
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
   static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(42.181186, -0.452474),
+    target: LatLng(42.17131586971877, -0.4523206650598738),
     zoom: 15.4746,
   );
   Future<Uint8List?> getBytesFromAsset(String path, int width) async {

@@ -111,7 +111,7 @@ class App extends StatelessWidget {
                         useMaterial3: true, dividerColor: Colors.transparent),
                     locale: getLocaleLanguage(context.watch<LanguageBloc>().state.languageCode),
                     supportedLocales: L10n.all,
-                    title: 'Etno App',
+                    title: 'Chimillas',
                     home: Home(),
                     localizationsDelegates: const [
                       AppLocalizations.delegate,
@@ -192,7 +192,7 @@ class HomeState extends State<Home> {
         const Duration(seconds: 1),
             (Timer t) =>
             setState(() {
-              section.getWeather(42.181186, -0.452474).then(
+              section.getWeather(42.17131586971877, -0.4523206650598738).then(
                       (value) =>
                   weather =
                       value); //42.138642896056545, -0.40759873321216106
@@ -554,7 +554,7 @@ Widget widgetWeather(BuildContext context, Weather weather) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Image.asset('assets/shield.png',
+                Image.asset('assets/ic_launcher.png',
                     width: 120.0, height: 120.0),
                 const SizedBox(width: 16.0),
                 Column(
