@@ -67,7 +67,7 @@ dependencies:
   hydrated_bloc: ^9.1.0
   json_annotation: ^4.8.0
   path: ^1.8.2
-  path_provider: ^2.0.14
+  path_provider: ^2.0.15
   rename: ^2.1.1
   custom_info_window: ^1.0.1
 
