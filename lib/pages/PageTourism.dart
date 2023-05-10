@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:etno_app/bloc/color/color_bloc.dart';
+import 'package:etno_app/pages/PageTourismSpecificMarker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../models/Tourism.dart';
@@ -24,14 +26,18 @@ class TourismState extends State<PageTourism> {
   Set<Marker> listMarkerSaved = {};
   List<TourismButton> tourismButton = [
     TourismButton('', Colors.black, 'Todo'),
+    TourismButton('assets/general.png', Colors.red, 'General'),
     TourismButton('assets/restaurant1.png', Colors.green, 'Restaurante'),
     TourismButton('assets/museum1.png', Colors.yellow, 'Museo'),
     TourismButton('assets/hotel1.png', Colors.indigo, 'Hotel')
   ];
+  List<Widget> widgetList = [
+    DrawerHeader(decoration: BoxDecoration(color: Colors.white), child: Image.asset('assets/app.png'))
+  ];
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
   static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(42.17131586971877, -0.4523206650598738),
+    target: LatLng(42.17122008920401, -0.45230446731245655),
     zoom: 15.4746,
   );
 
@@ -60,8 +66,18 @@ class TourismState extends State<PageTourism> {
           case 'Hotel':
             markerIcon = await getBytesFromAsset('assets/hotel1.png', 80);
             break;
+          case 'General':
+            markerIcon = await getBytesFromAsset('assets/general.png', 80);
+            break;
         }
         setState(() {
+          widgetList.add(
+              ListTile(
+                  tileColor: Colors.grey,
+                  leading: Icon(Icons.location_on, color: Colors.white),
+                  title: Text(element.title!, style: TextStyle(color: Colors.white)),
+                  onTap: () => Navigator.push(context, PageRouteBuilder(pageBuilder: (context, animation1, animation2) => PageSpecificMarker(tourism: element))))
+          );
           listMarker.add(Marker(
               icon: BitmapDescriptor.fromBytes(markerIcon!),
               onTap: () {
@@ -181,10 +197,17 @@ class TourismState extends State<PageTourism> {
         initialIndex: 0,
         length: tourismButton.length,
         child: Scaffold(
+            drawer: Drawer(
+              elevation: 5.0,
+              child:  ListView(
+                padding: EdgeInsets.zero,
+                children: widgetList
+              )
+            ),
             floatingActionButtonLocation:
             FloatingActionButtonLocation.startFloat,
             floatingActionButton: FloatingActionButton(
-              backgroundColor: context.watch<ColorBloc>().state.colorPrimary,
+              backgroundColor: Colors.green,
               onPressed: () => Navigator.pop(context),
               child: Icon(Icons.chevron_left),
             ),
@@ -212,6 +235,16 @@ class TourismState extends State<PageTourism> {
                                 MaterialStatePropertyAll(Colors.white)),
                             onPressed: () {
                               switch (tab.name) {
+                                case 'General':
+                                  setState(() {
+                                    listMarker = listMarkerSaved;
+                                    listMarker = listMarker
+                                        .where((element) =>
+                                    element.markerId.value ==
+                                        'General')
+                                        .toSet();
+                                  });
+                                  break;
                                 case 'Restaurante':
                                   setState(() {
                                     listMarker = listMarkerSaved;
@@ -269,6 +302,8 @@ class TourismState extends State<PageTourism> {
 
 String renderTextTraslated(String name, BuildContext context) {
   switch (name) {
+    case 'General':
+      return AppLocalizations.of(context)!.news_general;
     case 'Restaurante':
       return AppLocalizations.of(context)!.restaurant;
     case 'Todo':

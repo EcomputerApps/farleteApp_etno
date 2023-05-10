@@ -69,6 +69,7 @@ dependencies:
   path: ^1.8.2
   path_provider: ^2.0.14
   rename: ^2.1.1
+  custom_info_window: ^1.0.1
 
 flutter_native_splash:
   color: "#5FC2D9"
@@ -140,6 +141,7 @@ flutter:
       - assets/guardia1.png
       - assets/travel.jpg
       - assets/ic_launcher.png
+      - assets/general.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
