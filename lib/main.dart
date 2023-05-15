@@ -455,7 +455,7 @@ class HomeState extends State<Home> {
 
   Widget specialButtons(BuildContext context) {
     return Container(
-      height: 380,
+      height: 400,
         padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 16.0, bottom: 16.0),
         alignment: Alignment.center,
         child: GridView.count(
