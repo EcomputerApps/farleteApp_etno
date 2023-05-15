@@ -1,8 +1,10 @@
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../bloc/color/color_bloc.dart';
 import '../models/Pharmacy.dart';
 
 class PagePharmacySpecificMarker extends StatefulWidget {
@@ -15,8 +17,6 @@ class PagePharmacySpecificMarker extends StatefulWidget {
 
 class _PageSpecificMarkerState extends State<PagePharmacySpecificMarker> {
   late GoogleMapController mapController;
-
-  final LatLng _center = const LatLng(42.181186, -0.452474);
 
   CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
 
@@ -93,6 +93,8 @@ class _PageSpecificMarkerState extends State<PagePharmacySpecificMarker> {
       body:Stack(
         children: <Widget>[
           GoogleMap(
+            myLocationButtonEnabled: false,
+            mapType: MapType.normal,
             onTap: (position) {
               _customInfoWindowController.hideInfoWindow!();
             },
@@ -103,13 +105,21 @@ class _PageSpecificMarkerState extends State<PagePharmacySpecificMarker> {
               _customInfoWindowController.googleMapController = controller;
             },
             initialCameraPosition: CameraPosition(
-              target: _center,
+              target: LatLng(widget.pharmacy.latitude!, widget.pharmacy.longitude!),
               zoom: 15.4746,
             ),
             markers: markers,
           )
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+
+        backgroundColor: context.watch<ColorBloc>().state.colorPrimary,
+        onPressed: () => Navigator.pop(context),
+        child: Icon(Icons.chevron_left, color: context.watch<ColorBloc>().state.colorSecondary),
+        shape: CircleBorder(),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 }

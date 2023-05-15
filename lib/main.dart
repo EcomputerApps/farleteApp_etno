@@ -455,7 +455,7 @@ class HomeState extends State<Home> {
 
   Widget specialButtons(BuildContext context) {
     return Container(
-      height: 350,
+      height: 380,
         padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 16.0, bottom: 16.0),
         alignment: Alignment.center,
         child: GridView.count(
@@ -554,7 +554,7 @@ Widget widgetWeather(BuildContext context, Weather weather) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Image.asset('assets/ic_launcher.png',
+                Image.asset('assets/app.png',
                     width: 120.0, height: 120.0),
                 const SizedBox(width: 16.0),
                 Column(
@@ -599,7 +599,7 @@ Widget widgetWeather(BuildContext context, Weather weather) {
 //slide notifications
 Widget slideNotifications(BuildContext context, Section section) {
   return Container(
-    margin: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 16.0),
+    margin: EdgeInsets.only(left: 40.0, right: 40.0, bottom: 16.0),
     child: Observer(builder: (context) {
       if (section.getBandos.isNotEmpty){
        return ListView.builder(

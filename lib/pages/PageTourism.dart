@@ -207,7 +207,7 @@ class TourismState extends State<PageTourism> {
             floatingActionButtonLocation:
             FloatingActionButtonLocation.startFloat,
             floatingActionButton: FloatingActionButton(
-              backgroundColor: Colors.green,
+              backgroundColor: context.watch<ColorBloc>().state.colorPrimary,
               onPressed: () => Navigator.pop(context),
               child: Icon(Icons.chevron_left),
             ),
