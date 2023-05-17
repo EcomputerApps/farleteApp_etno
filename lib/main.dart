@@ -715,42 +715,54 @@ Widget cardEventsCalendar(BuildContext context, Event event) {
       decoration:
       BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
       width: 260,
-      child: Card.Card(
-        color: Color.fromRGBO(253, 178, 108, 1),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                  padding: EdgeInsets.only(left: 16.0, top: 10.0),
-                  width: 70.0,
-                  child: Column(children: [
-                    Text(event.startDate!.substring(8),
-                      style: TextStyle(fontSize: 25.0),
-                    ),
-                    Text(returnDate(context, event),
-                        style: TextStyle(
-                            fontSize: 18.0, color: Colors.white))
-                  ])),
-              VerticalDivider(
-                color: Colors.deepOrange,
-                thickness: 1.0,
-                width: 1.0,
-                indent: 16.0,
-                endIndent: 16.0,
-              ),
-              Container(
-                  padding:
-                  EdgeInsets.only(right: 5.0, top: 5.0, bottom: 5.0),
-                  width: 170.0,
-                  child: Text(
-                    event.title!,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ))
-            ]),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                  pageBuilder:
+                      (context, animation1, animation2) =>
+                  const PageEvents(),
+                  transitionDuration: Duration.zero,
+                  reverseTransitionDuration: Duration.zero));
+        },
+        child: Card.Card(
+          color: Color.fromRGBO(253, 178, 108, 1),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                    padding: EdgeInsets.only(left: 16.0, top: 10.0),
+                    width: 70.0,
+                    child: Column(children: [
+                      Text(event.startDate!.substring(8),
+                        style: TextStyle(fontSize: 25.0),
+                      ),
+                      Text(returnDate(context, event),
+                          style: TextStyle(
+                              fontSize: 18.0, color: Colors.white))
+                    ])),
+                VerticalDivider(
+                  color: Colors.deepOrange,
+                  thickness: 1.0,
+                  width: 1.0,
+                  indent: 16.0,
+                  endIndent: 16.0,
+                ),
+                Container(
+                    padding:
+                    EdgeInsets.only(right: 5.0, top: 5.0, bottom: 5.0),
+                    width: 170.0,
+                    child: Text(
+                      event.title!,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ))
+              ]),
+        ),
       ));
 }
 
