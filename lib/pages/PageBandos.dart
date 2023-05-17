@@ -94,79 +94,118 @@ Widget carBando(Bandos bandos, BuildContext context) {
   );
 }
 
-showDialogBandos(BuildContext context, Bandos bandos) => showBottomSheet(
-    backgroundColor: Colors.white,
-    context: context,
-    builder: (context) {
-      return SafeArea(
-          minimum: EdgeInsets.only(bottom: 16.0),
-          child: Wrap(
-            children: [
-              Column(
-                children: [
-                  Container(
+showDialogBandos(BuildContext context, Bandos bandos) => showModalBottomSheet(
+  isScrollControlled: true,
+  context: context,
+  builder: (context) {
+    return DraggableScrollableSheet(
+      expand: false,
+      builder: (context, scrollController) {
+        return Dismissible(
+          direction: DismissDirection.vertical,
+          key: Key('dialog'),
+          onDismissed: (_) {
+            Navigator.of(context).pop();
+          },
+          child: SingleChildScrollView(
+            controller: scrollController,
+            child: Container(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: InkWell(
+                onTap: () {},
+                child: Column(
+                  children: [
+                    Container(
                       padding: const EdgeInsets.only(top: 15.0),
                       child: bandos.imageUrl != null
-                          ? Image.network(bandos.imageUrl!, fit: BoxFit.fill)
-                          : Icon(Icons.campaign,
-                          size: 80.0, color: context.watch<ColorBloc>().state.colorDark)),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(15.0),
-                          alignment: Alignment.topLeft,
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.only(left: 15.0),
-                                alignment: Alignment.topLeft,
-                                child: Text(bandos.title!,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.0)),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.only(left: 15.0),
-                                alignment: Alignment.topLeft,
-                                child: Text('${bandos.username} · Huesca',
-                                    style: const TextStyle(
-                                        color: Colors.grey, fontSize: 10.0)),
-                              ),
-                              const Divider(),
-                              Container(
-                                padding:
-                                const EdgeInsets.only(left: 15.0, top: 4.0),
-                                alignment: Alignment.topLeft,
-                                child: Text(AppLocalizations.of(context)!.issued,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.0)),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.only(left: 15.0),
-                                alignment: Alignment.topLeft,
-                                child: Text(bandos.issuedDate!,
-                                    style: const TextStyle(
-                                        color: Colors.grey, fontSize: 10.0)),
-                              ),
-                              const Divider(),
-                              Container(
+                          ? Image.network(
+                        bandos.imageUrl!,
+                        fit: BoxFit.fill,
+                      )
+                          : Icon(
+                        Icons.campaign,
+                        size: 80.0,
+                        color: context.watch<ColorBloc>().state.colorDark,
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.topLeft,
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(15.0),
+                            alignment: Alignment.topLeft,
+                            child: Column(
+                              children: [
+                                Container(
                                   padding: const EdgeInsets.only(left: 15.0),
                                   alignment: Alignment.topLeft,
-                                  child: Text(bandos.description!,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 11.0)))
-                            ],
+                                  child: Text(
+                                    bandos.title!,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12.0,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.only(left: 15.0),
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    '${bandos.username}',
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 10.0,
+                                    ),
+                                  ),
+                                ),
+                                const Divider(),
+                                Container(
+                                  padding: const EdgeInsets.only(left: 15.0, top: 4.0),
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    AppLocalizations.of(context)!.issued,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12.0,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.only(left: 15.0),
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    bandos.issuedDate!,
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 10.0,
+                                    ),
+                                  ),
+                                ),
+                                const Divider(),
+                                SingleChildScrollView(
+                                  padding: const EdgeInsets.only(left: 15.0),
+                                  child: Text(
+                                    bandos.description!,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 11.0,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
-                  )
-                ],
-              )
-            ],
-          ));
-    });
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  },
+);

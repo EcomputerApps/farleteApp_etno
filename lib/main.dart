@@ -30,6 +30,7 @@ import 'package:etno_app/utils/WarningWidgetValueNotifier.dart';
 import 'package:etno_app/widgets/DropDownLanguage.dart';
 import 'package:etno_app/widgets/appbar_navigation.dart';
 import 'package:etno_app/widgets/bottom_navigation.dart';
+import 'package:etno_app/widgets/home_widgets.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -456,15 +457,18 @@ class HomeState extends State<Home> {
   Widget specialButtons(BuildContext context) {
     return Container(
       height: 400,
-        padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 16.0, bottom: 16.0),
-        alignment: Alignment.center,
-        child: GridView.count(
-            mainAxisSpacing: 16.0,
-            crossAxisSpacing: 16.0,
-            physics: NeverScrollableScrollPhysics(),
-            crossAxisCount: 2,
-            children: section_list.map((e) => returnElevatedButton(context, e)).toList()
-        ),
+      padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 16.0, bottom: 16.0),
+      alignment: Alignment.center,
+      child: GridView.count(
+        mainAxisSpacing: 16.0,
+        crossAxisSpacing: 16.0,
+        physics: NeverScrollableScrollPhysics(),
+        crossAxisCount: 2,
+        children: [
+          for (var item in section_list.take(4)) // Tomar solo los primeros 4 elementos
+            returnElevatedButton(context, item),
+        ],
+      ),
     );
   }
 
@@ -655,7 +659,7 @@ Widget slideEvents(BuildContext context, Section section) {
     height: 120,
     child: Observer(builder: (context){
       if (section.getListEvent.isNotEmpty){
-       return ListView(scrollDirection: Axis.horizontal, children: section.getListEvent.map((e) => cardEventsCalendar(context, e)).toList());
+       return ListView(scrollDirection: Axis.horizontal, children: section.getListEvent.map((e) => cardEventsCalendar(context, e, section)).toList());
       }else {
        return Center(child: Row(
          mainAxisAlignment: MainAxisAlignment.center,
@@ -709,22 +713,21 @@ String getSectionText(String sectionText, BuildContext context) {
   }
 }
 
-Widget cardEventsCalendar(BuildContext context, Event event) {
+Widget cardEventsCalendar(BuildContext context, Event event, Section section) {
   return Container(
       alignment: Alignment.center,
       decoration:
       BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
       width: 260,
       child: GestureDetector(
-        onTap: () {
-          Navigator.pushReplacement(
-              context,
-              PageRouteBuilder(
-                  pageBuilder:
-                      (context, animation1, animation2) =>
-                  const PageEvents(),
-                  transitionDuration: Duration.zero,
-                  reverseTransitionDuration: Duration.zero));
+        onTap: () => {
+          FirebaseMessaging.instance.getToken().then((value){
+            section.getSubscription(value!, event.title!).then((value){
+              section.getEventByUsernameAndTitle(event.username!, event.title!).then((event){
+                showDialogEvent(context, event, value);
+              });
+            });
+          })
         },
         child: Card.Card(
           color: Color.fromRGBO(253, 178, 108, 1),
