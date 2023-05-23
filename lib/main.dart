@@ -73,6 +73,7 @@ void main() async {
     badge: true,
     sound: true,
   );
+
   Stripe.publishableKey =
   'pk_live_51MdqjZIiwWrt0LxLwUWAcWlZlJRVqzkZE8pvcwx5qgtXMy8OSw9rdPm4X8zb5JDMzblCswJRc6eNcA1PSydYvOE000rpx0MTpS';
   await Stripe.instance.applySettings();
@@ -198,6 +199,8 @@ class HomeState extends State<Home> {
                   weather =
                       value); //42.138642896056545, -0.40759873321216106
             }));
+
+
   }
 
   @override
@@ -721,6 +724,7 @@ Widget cardEventsCalendar(BuildContext context, Event event, Section section) {
       width: 260,
       child: GestureDetector(
         onTap: () => {
+          print(FirebaseMessaging.instance.getToken()),
           FirebaseMessaging.instance.getToken().then((value){
             section.getSubscription(value!, event.title!).then((value){
               section.getEventByUsernameAndTitle(event.username!, event.title!).then((event){
@@ -844,3 +848,4 @@ Function() returnFunctionNavigate(String sectionName, BuildContext context){
     default: return () => print('Is not working');
   }
 }
+

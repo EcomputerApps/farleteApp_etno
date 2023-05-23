@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../models/Service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../store/section.dart';
+
 class PageServicesList extends StatefulWidget{
   const PageServicesList({super.key, required this.locality, required this.category});
   final String locality;
@@ -30,9 +31,9 @@ class ServicesListState extends State<PageServicesList> {
     return Observer(builder: (context) {
       if(section.getListServices.isNotEmpty){
         return servicesList(section, contextState);
-      }else{
+      } else{
         return Container(
-            padding: const EdgeInsets.only(top: 300.0),
+           padding: const EdgeInsets.only(top: 300.0),
             alignment: Alignment.center,
             child: Column(
                 children: [
@@ -44,6 +45,7 @@ class ServicesListState extends State<PageServicesList> {
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -58,7 +60,7 @@ class ServicesListState extends State<PageServicesList> {
                     Container(
                         padding: const EdgeInsets.all(15.0),
                         child:
-                        renderWidgets(context)
+                       renderWidgets(context)
                     )
                   ]
               )
@@ -69,68 +71,87 @@ class ServicesListState extends State<PageServicesList> {
 }
 
 Widget servicesList(Section section, BuildContext context){
+  final Size screenSize = MediaQuery.of(context).size;
   Future<void> launchCaller(String phoneNumber) async {
     final Uri launchUri = Uri(
       scheme: 'tel',
       path: phoneNumber,
     );
     await launchUrl(launchUri);
+
   }
-  return ListView(
-      shrinkWrap: true,
+  return Container(
+    padding: EdgeInsets.only(bottom: 15.0),
+    height: screenSize.height,
+
+   // alignment: AlignmentDirectional.center,
+    child : ListView(
+      padding: EdgeInsets.only(bottom: 180),
+      physics: AlwaysScrollableScrollPhysics(),
       children:
-      section.getListServices.map((e) =>
-          InkWell(
-            child: Container(
+      section.getListServices.map((e) => //
+          Container(
               alignment: Alignment.topLeft,
               child: Card(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        children: [
-                          SizedBox(width: 16.0),
-                          renderImageServiceList(e),
-                          SizedBox(width: 5.0),
-                          Text(e.owner!, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0)),
-                          const SizedBox(width: 150.0),
-                          const Icon(Icons.phone, size: 15.0),
-                          const SizedBox(width: 5.0),
-                          Text(e.number!, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0)),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            renderImageServiceList(e),
+                            const SizedBox(width: 8.0),
+                            Flexible(
+                              child: Text(
+                                e.owner!,
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ),
+                            const Spacer(),
+                          ],
+                        ),
                       ),
+
                       const Divider(),
                       Container(
-                        padding: const EdgeInsets.only(left: 15.0, bottom: 5.0),
+                        padding: const EdgeInsets.all(8.0),
                         alignment: Alignment.topLeft,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(AppLocalizations.of(context)!.type_service, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0)),
                             Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(AppLocalizations.of(context)!.service, style: const TextStyle(color: Colors.grey, fontSize: 10.0)),
-                                  const SizedBox(
-                                    width: 180.0,
-                                  ),
-                                  ElevatedButton(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(AppLocalizations.of(context)!.service, style: const TextStyle(color: Colors.grey, fontSize: 10.0)),
+                                Spacer(),
+
+                                ElevatedButton(
                                     onPressed: (){ launchCaller(e.number!); },
                                     style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                                     child: Text(AppLocalizations.of(context)!.call),
-                                  )
-                                ]),
+                                  ),
+
+                              ],
+                            ),
                           ],
                         ),
-                      )
+                      ),
+
                     ],
                   )
               ),
             ),
-          )
+
       ).toList()
-  );
+
+  ));
 }
+
 Widget renderImageServiceList(Service service){
   if (service.imageUrl == null){
     return Image.asset('assets/service_icon.png', height: 20, width: 20);
