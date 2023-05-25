@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:146712911855:android:8aadd8ac2387e8e26d601a",
         "android_client_info": {
-          "package_name": "com.ecomputer.chimillasapp"
+          "package_name": "com.ecomputer.banastas"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "146712911855-gvst7lp8bc1ov6l16qd5qep8u39pnuoi.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.ecomputer.etnoApp"
+                "bundle_id": "com.ecomputer.banastasapp"
               }
             }
           ]
