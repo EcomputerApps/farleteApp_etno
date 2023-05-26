@@ -561,7 +561,7 @@ Widget widgetWeather(BuildContext context, Weather weather) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Image.asset('assets/ic_launcher.png',
+                Image.asset('assets/iconomapa.png',
                     width: 120.0, height: 120.0),
                 const SizedBox(width: 16.0),
                 Column(
