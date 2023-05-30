@@ -113,7 +113,7 @@ class App extends StatelessWidget {
                         useMaterial3: true, dividerColor: Colors.transparent),
                     locale: getLocaleLanguage(context.watch<LanguageBloc>().state.languageCode),
                     supportedLocales: L10n.all,
-                    title: 'Banastás',
+                    title: 'Farlete',
                     home: Home(),
                     localizationsDelegates: const [
                       AppLocalizations.delegate,
@@ -194,7 +194,7 @@ class HomeState extends State<Home> {
         const Duration(seconds: 1),
             (Timer t) =>
             setState(() {
-              section.getWeather(42.181445, -0.452228).then(
+              section.getWeather(41.68185056511735, -0.5067737294830511).then(
                       (value) =>
                   weather =
                       value); //42.138642896056545, -0.40759873321216106
@@ -585,7 +585,7 @@ Widget widgetWeather(BuildContext context, Weather weather) {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 30.0,
                                   color: Colors.black)),
-                          Text('${Globals.locality}',
+                          Text('Farlete',
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 25.0,

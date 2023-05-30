@@ -45,7 +45,7 @@ class _PageSpecificMarkerState extends State<PageSpecificMarker> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                         widget.tourism.imageUrl != null ? Image.network(widget.tourism.imageUrl!, height: 80.0, width: 80.0) : Image.asset('assets/app.png'),
+                         widget.tourism.imageUrl != null ? Image.network(widget.tourism.imageUrl!, height: 80.0, width: 80.0) : Image.asset('assets/iconomapa.png'),
                           SizedBox(
                             width: 8.0,
                           ),

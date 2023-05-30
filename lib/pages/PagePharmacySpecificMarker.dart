@@ -45,7 +45,7 @@ class _PageSpecificMarkerState extends State<PagePharmacySpecificMarker> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            widget.pharmacy.imageUrl != null ? Image.network(widget.pharmacy.imageUrl!, height: 80.0, width: 80.0) : Image.asset('assets/app.png'),
+                            widget.pharmacy.imageUrl != null ? Image.network(widget.pharmacy.imageUrl!, height: 80.0, width: 80.0) : Image.asset('assets/iconomapa.png'),
                             SizedBox(
                               width: 8.0,
                             ),

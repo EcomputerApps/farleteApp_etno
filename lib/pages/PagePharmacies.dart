@@ -32,12 +32,12 @@ class PharmaciesState extends State<PagePharmacies> {
     PharmaciesButton(Icons.local_pharmacy, Colors.red, 'Guardia')
   ];
   List<Widget> widgetList = [
-    DrawerHeader(decoration: BoxDecoration(color: Colors.white), child: Image.asset('assets/app.png'))
+    DrawerHeader(decoration: BoxDecoration(color: Colors.white), child: Image.asset('assets/iconomapa.png'))
   ];
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
   static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(42.181445, -0.452228),
+    target: LatLng(41.68185056511735, -0.5067737294830511),
     zoom: 15.4746,
   );
   Future<Uint8List?> getBytesFromAsset(String path, int width) async {
